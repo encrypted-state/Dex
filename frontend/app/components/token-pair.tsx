@@ -60,7 +60,9 @@ const TokenSelector = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const filteredTokens = tokens.filter(
-    (token) => token.address !== "NATIVE" && (!excludeToken || token.symbol !== excludeToken.symbol),
+    (token) =>
+      token.address !== "NATIVE" &&
+      (!excludeToken || token.symbol !== excludeToken.symbol),
   );
 
   return (

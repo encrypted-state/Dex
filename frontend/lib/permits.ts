@@ -15,12 +15,12 @@ export async function generatePermits(
   return permit;
 }
 
-export async function revokePermits(
-  contractAddress: string,
-  fhenix: FhenixClient,
-  provider: EthersProvider,
-) {
-  removePermit(contractAddress);
+// export async function revokePermits(
+//   contractAddress: string,
+//   fhenix: FhenixClient,
+//   provider: EthersProvider,
+// ) {
+//   removePermit(contractAddress);
 
-  return new FhenixClient({ provider });
-}
+//   return new FhenixClient({ provider });
+// }

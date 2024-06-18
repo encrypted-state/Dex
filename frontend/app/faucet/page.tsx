@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+"use client";
 import Link from "next/link";
 import {
   Table,
@@ -12,11 +12,14 @@ import {
 import { useAccount, useClient, useConnect, useWriteContract } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { tokens } from "@/lib/tokens";
+import dynamic from "next/dynamic";
 
 import { ethers } from "ethers";
-import Token from "../components/token";
+// import Token from "../components/token";
 
 export default function FaucetPage() {
+  const Token = dynamic(() => import("../components/token"), { ssr: false });
+
   return (
     <>
       <h1 className="font-semibold text-2xl mb-2">Test Assets</h1>

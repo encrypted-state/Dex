@@ -1,20 +1,20 @@
 import { type Chain } from "viem";
 
 export const fhenixfrontier: Chain = {
-  id: 42069,
-  name: "Fhenix Frontier",
+  id: 8008135,
+  name: "Fhenix Helium",
   nativeCurrency: {
     decimals: 18,
     name: "Fhenix",
     symbol: "tFHE",
   },
   rpcUrls: {
-    default: { http: ["https://api.testnet.fhenix.zone:7747/"] },
+    default: { http: ["https://api.helium.fhenix.zone/"] },
   },
   blockExplorers: {
     default: {
       name: "Fhenix Explorer",
-      url: "https://explorer.testnet.fhenix.zone/",
+      url: "https://explorer.helium.fhenix.zone",
     },
   },
   testnet: true,

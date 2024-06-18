@@ -1,7 +1,12 @@
-export const dynamic = "force-dynamic";
-import TokenPair from "../components/token-pair";
+"use client";
+// import TokenPair from "../components/token-pair";
+import dynamic from "next/dynamic";
 
 export default function LiquidityPage() {
+  const TokenPair = dynamic(() => import("../components/token-pair"), {
+    ssr: false,
+  });
+
   return (
     <div className="mt-20">
       <div className="flex flex-col items-center">

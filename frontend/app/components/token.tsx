@@ -47,7 +47,7 @@ export default function Token({ token }: any) {
 
   async function getEncryptedBalance() {
     const permit = await generatePermits(token.address, provider);
-    fhenix.storePermit(permit);
+    fhenix.storePermit(permit!);
     const permission = await fhenix!.extractPermitPermission(permit!);
 
     console.log(token.address);
