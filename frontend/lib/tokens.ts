@@ -10,42 +10,36 @@ export const tokens: Array<Token> = [
     symbol: "tFHE",
     name: "Fhenix Token",
     address: "NATIVE",
-    image:
-      "fhenix.png",
+    image: "fhenix.png",
   },
   {
     symbol: "UNI",
     name: "Uniswap",
-    address: "0xA5fB53e25bd4261ce891dcafacbDD00fC26a2F84",
-    image:
-      "uni.svg",
+    address: "0x67C32b5dE05b2D805a4ff3E19DDFd886C4486004",
+    image: "uni.svg",
   },
   {
     symbol: "DAI",
     name: "DAI",
-    address: "0x36a37a136AB4e5be83BAcde2847D134E9125E17B",
-    image:
-      "dai.svg",
+    address: "0x8e29d0877D117479F120D7C5D0eC44e455E7e706",
+    image: "dai.svg",
   },
   {
     symbol: "USDC",
     name: "USD Coin",
-    address: "0xE1724a7da2cE9fCdC1C035c7C7EfEb31e7F121c1",
-    image:
-      "usdc.svg",
+    address: "0xc631c1374721f28d075F896A3fC6c29066E2F0C8",
+    image: "usdc.svg",
   },
   {
     symbol: "LINK",
     name: "Link",
-    address: "0x595263d73F6600F5d0d9C8707b7B2ca3d7916808",
-    image:
-      "link.svg",
+    address: "0x86b0b98CBF9535eeA71025256b17E85864ac5eb4",
+    image: "link.svg",
   },
   {
     symbol: "MATIC",
     name: "Polygon",
-    address: "0x8c7423c8221c2937d0A11aC3fD62892a88122348",
-    image:
-      "matic.svg",
-  }
+    address: "0xeCfE31b9965690E0e669a2e82669Bd7464a5E8Fc",
+    image: "matic.svg",
+  },
 ];

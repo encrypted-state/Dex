@@ -15,6 +15,10 @@ export default function FaucetPage() {
   return (
     <>
       <h1 className="font-semibold text-2xl mb-2">Test Assets</h1>
+      <p className="text-red-400">
+        {" "}
+        these are all mock tokens and has no relation with the real tokens
+      </p>
       <Table>
         <TableHeader>
           <TableRow>

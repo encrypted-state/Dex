@@ -43,7 +43,7 @@ import { FhenixClient } from "fhenixjs";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 // fix this
-const routerAddress: string = "0x58295167A9c2fecE5C6C709846EaAdCe3668Ed5F";
+const routerAddress: string = "0xcd527a939a8726Dd3E8f3Acc0adc13D8E8CaF206";
 
 const TokenSelector = ({
   selectedToken,

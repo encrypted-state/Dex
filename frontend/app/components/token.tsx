@@ -75,7 +75,7 @@ export default function Token({ token }: any) {
     getEncryptedBalance();
   }
 
-  const externalMintUrl = "https://faucet.fhenix.zone/";
+  const externalMintUrl = "https://get-helium.fhenix.zone/";
 
   return (
     <TableRow>
