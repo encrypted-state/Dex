@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { evmNetworks } from "@/lib/custom-chains";
 
 import { ThemeProvider } from "@/app/components/theme-provider";
-import { ConnectKitButton } from "connectkit";
 const inter = Inter({ subsets: ["latin"] });
-import { Web3Provider } from "./components/web3-provider";
 import Navbar from "./navbar";
+
+import { Providers } from "./providers";
+
 export const metadata: Metadata = {
   title: "Donut",
 };
@@ -17,8 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Web3Provider>
-        <body className={inter.className}>
+      <body className={inter.className}>
+        <Providers>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -30,8 +32,8 @@ export default function RootLayout({
               {children}
             </main>
           </ThemeProvider>
-        </body>
-      </Web3Provider>
+        </Providers>
+      </body>
     </html>
   );
 }

@@ -1,10 +1,18 @@
 import { http, createConfig } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
+import { mainnet } from "wagmi/chains";
+import { fhenixfrontier } from "@/lib/custom-chains";
 
 export const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [fhenixfrontier],
+  multiInjectedProviderDiscovery: false,
+  ssr: true,
   transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
+    [fhenixfrontier.id]: http(),
   },
 });
+
+declare module "wagmi" {
+  interface Register {
+    config: typeof config;
+  }
+}

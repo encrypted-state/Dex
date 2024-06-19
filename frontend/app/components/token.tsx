@@ -1,43 +1,34 @@
 "use client";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/app/components/ui/table";
+import { TableCell, TableRow } from "@/app/components/ui/table";
 import { AvatarImage, Avatar, AvatarFallback } from "./ui/avatar";
 import Link from "next/link";
 import { useAccount } from "wagmi";
 
 import { Button } from "./ui/button";
-import { getPermit, FhenixClient } from "fhenixjs";
-import { useState, useEffect, useCallback } from "react";
+import { FhenixClient } from "fhenixjs";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { fherc20ABI } from "@/abi/fherc20ABI";
-import { injected } from "wagmi/connectors";
 
 import { generatePermits } from "@/lib/permits";
 import { ethers, formatEther } from "ethers";
 import { useEthersSigner } from "@/lib/ethers";
 
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+
 export default function Token({ token }: any) {
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  const fhenix = new FhenixClient({ provider });
+  const { primaryWallet } = useDynamicContext();
 
   const [balance, setBalance] = useState<string>("Encrypted");
   const signer = useEthersSigner();
-  const { address } = useAccount();
 
   const getNativeBalance = useCallback(async () => {
     try {
-      const balance = await provider.getBalance(address!);
-      setBalance(formatEther(balance));
+      const balance = await primaryWallet?.connector.getBalance();
+      setBalance(balance!);
     } catch (error) {
       console.error("Error fetching native balance:", error);
     }
-  }, [provider, address, setBalance]);
+  }, [primaryWallet, setBalance]);
 
   useEffect(() => {
     if (token.address === "NATIVE") {
@@ -46,10 +37,12 @@ export default function Token({ token }: any) {
   }, [token.address, getNativeBalance]);
 
   async function getEncryptedBalance() {
-    const permit = await generatePermits(token.address, provider);
+    const provider = await primaryWallet?.connector.ethers?.getWeb3Provider();
+    const fhenix = new FhenixClient({ provider });
+
+    const permit = await generatePermits(token.address, provider!);
     fhenix.storePermit(permit!);
     const permission = await fhenix!.extractPermitPermission(permit!);
-
     console.log(token.address);
     const contract = {
       contract: new ethers.Contract(token.address, fherc20ABI, signer as any),
@@ -57,7 +50,7 @@ export default function Token({ token }: any) {
     };
 
     const eBalance = await contract.contract.balanceOfSealed(
-      address,
+      primaryWallet?.address,
       permission,
     );
     const DecryptedBalance = fhenix!.unseal(token.address, eBalance);
@@ -73,6 +66,9 @@ export default function Token({ token }: any) {
       address: token.address,
     };
     console.log(contract);
+    const provider = await primaryWallet?.connector.ethers?.getWeb3Provider();
+    const fhenix = new FhenixClient({ provider });
+
     const mintValue = await fhenix.encrypt_uint16(100);
     try {
       const tx = await contract.contract.mintEncrypted(mintValue);
@@ -100,7 +96,7 @@ export default function Token({ token }: any) {
       <TableCell className="pl-2 w-[110px]">
         {" "}
         <p>
-          {address ? (
+          {primaryWallet?.address ? (
             token.address === "NATIVE" ? (
               balance
             ) : balance === "Encrypted" ? (

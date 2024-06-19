@@ -1,41 +1,19 @@
 "use client";
 
-import { http, createConfig, WagmiProvider } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { ThemeProvider } from "./theme-provider";
+import { useState, type ReactNode } from "react";
+import { WagmiProvider } from "wagmi";
 
-import { fhenixfrontier } from "@/lib/custom-chains";
+import { config } from "@/lib/wagmi-config";
 
-const config = createConfig(
-  getDefaultConfig({
-    // Your dApps chains
-    chains: [fhenixfrontier],
-    transports: {
-      [fhenixfrontier.id]: http(),
-    },
-    // Required API Keys
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+export function Providers(props: { children: ReactNode }) {
+  const [queryClient] = useState(() => new QueryClient());
 
-    // Required App Info
-    appName: "EthDenver-FHE-DEX",
-  }),
-);
-
-const queryClient = new QueryClient();
-
-export const Web3Provider = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider>{children}</ConnectKitProvider>
+        {props.children}
       </QueryClientProvider>
     </WagmiProvider>
   );
-};
+}

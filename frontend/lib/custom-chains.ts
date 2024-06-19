@@ -19,3 +19,22 @@ export const fhenixfrontier: Chain = {
   },
   testnet: true,
 };
+
+export const evmNetworks = [
+  {
+    blockExplorerUrls: ["https://explorer.helium.fhenix.zone"],
+    chainId: 8008135,
+    chainName: "Fhenix Helium",
+    iconUrls: ["https://app.dynamic.xyz/assets/networks/eth.svg"],
+    name: "Fhenix Helium",
+    nativeCurrency: {
+      decimals: 18,
+      name: "Fhenix",
+      symbol: "tFHE",
+    },
+    networkId: 8008135,
+
+    rpcUrls: ["https://api.helium.fhenix.zone/"],
+    vanityName: "Fhenix Helium",
+  },
+];

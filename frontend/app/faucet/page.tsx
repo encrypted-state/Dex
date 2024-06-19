@@ -1,24 +1,17 @@
 "use client";
-import Link from "next/link";
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-import { useAccount, useClient, useConnect, useWriteContract } from "wagmi";
-import { injected } from "wagmi/connectors";
 import { tokens } from "@/lib/tokens";
 import dynamic from "next/dynamic";
 
-import { ethers } from "ethers";
-// import Token from "../components/token";
-
 export default function FaucetPage() {
   const Token = dynamic(() => import("../components/token"), { ssr: false });
+  console.log("render faucet");
 
   return (
     <>

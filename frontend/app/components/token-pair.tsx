@@ -3,8 +3,6 @@ import { Button } from "@/app/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
@@ -29,14 +27,11 @@ import {
 import { useState } from "react";
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "./ui/command";
 import { AvatarFallback, AvatarImage, Avatar } from "./ui/avatar";
 import { Token, tokens } from "@/lib/tokens";
@@ -45,6 +40,7 @@ import { useEthersSigner } from "@/lib/ethers";
 import { routerABI } from "@/abi/routerABI";
 import { fherc20ABI } from "@/abi/fherc20ABI";
 import { FhenixClient } from "fhenixjs";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 // fix this
 const routerAddress: string = "0x58295167A9c2fecE5C6C709846EaAdCe3668Ed5F";
@@ -208,14 +204,14 @@ const MainButton = ({
   AmountIn: number;
   AmountOut: number;
 }) => {
-  const { isConnected } = useAccount();
   const signer: any = useEthersSigner();
-  const { address } = useAccount();
-
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  const fhenix = new FhenixClient({ provider });
+  const { primaryWallet, isAuthenticated } = useDynamicContext();
+  console.log(isAuthenticated);
 
   async function handleSwap() {
+    const provider = await primaryWallet?.connector.ethers?.getWeb3Provider();
+    const fhenix = new FhenixClient({ provider });
+
     const amountTokenIn = await fhenix.encrypt_uint16(AmountIn);
 
     const tokenInContract = {
@@ -243,12 +239,15 @@ const MainButton = ({
     const swap = await RouterContract.contract.swapExactTokensForTokens(
       amountTokenIn,
       [topToken.address, bottomToken.address],
-      address,
+      primaryWallet?.address,
     );
     swap.wait();
   }
 
   async function handleAddLiquidity() {
+    const provider = await primaryWallet?.connector.ethers?.getWeb3Provider();
+    const fhenix = new FhenixClient({ provider });
+
     const amountTokenTop = await fhenix.encrypt_uint16(AmountIn);
     const amountTokenBottom = await fhenix.encrypt_uint16(AmountOut);
     const tokenContract1 = {
@@ -289,13 +288,13 @@ const MainButton = ({
       bottomToken.address,
       amountTokenTop,
       amountTokenBottom,
-      address,
+      primaryWallet?.address,
     );
     await addliquidity.wait();
   }
   return (
     <>
-      {isConnected ? (
+      {isAuthenticated ? (
         <Button
           className="w-full text-base mt-1"
           size={"lg"}
