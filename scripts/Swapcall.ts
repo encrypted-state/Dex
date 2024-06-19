@@ -21,10 +21,10 @@ async function Swapcall() {
   // AMM deployed to: 0x2d768d26F9b3f7B588FDF7C8744825385B3aE1F0
   // Router deployed to: 0x66508D54e296E523949e254a7CfE09Bf8b8094D2
 
-  const token1Address = "0xB5ca27C46E132023e839EE87303429Fd4B2f580F";
-  const token2Address = "0x484a2d41C2F7A33F08260c2443E33C5104290232";
-  const factoryAddress = "0x5a92979d6172b6E591b323C709010074456e53F7";
-  const routerAddress = "0x3F5Cd6F23BB92D9926f1e948c3cE912E13C7e707";
+  const token1Address = "0x729F00113bD96C559a784EA1c91461d7fBA5c00a";
+  const token2Address = "0xC0Ee18DeA831991688f55a8Aff03df3F9E9E4b54";
+  const factoryAddress = "0x54Fd4f59cD7b2a80a394eDb698A4CC64CDe20D9D";
+  const routerAddress = "0xdc447F70b288B44A6621cBE2F087D5eD185dAeC7";
   // const pairAddress = "0x4815FecD7989ba6f7Ceff13cDBDd775ac9334015";
   const provider = hre.ethers.provider;
   const instance = new FhenixClient({ provider });
@@ -33,17 +33,18 @@ async function Swapcall() {
   const factory = await hre.ethers.getContractAt("Factory", factoryAddress);
 
   const amount1 = await instance.encrypt_uint16(1000);
+
   const amount2 = await instance.encrypt_uint16(1000);
   const token1 = await hre.ethers.getContractAt("FHERC20", token1Address);
   const token2 = await hre.ethers.getContractAt("FHERC20", token2Address);
 
   const permitToken1 = await getPermit(token1Address, provider);
-  instance.storePermit(permitToken1);
-  const permissionToken1 = instance.extractPermitPermission(permitToken1);
+  instance.storePermit(permitToken1!);
+  const permissionToken1 = instance.extractPermitPermission(permitToken1!);
 
   const permitToken2 = await getPermit(token2Address, provider);
-  instance.storePermit(permitToken2);
-  const permissionToken2 = instance.extractPermitPermission(permitToken2);
+  instance.storePermit(permitToken2!);
+  const permissionToken2 = instance.extractPermitPermission(permitToken2!);
 
   const eBalance1BeforeMint = await token1.balanceOfSealed(
     contractOwner.address,
@@ -114,8 +115,8 @@ async function Swapcall() {
 
   console.log("pairAddress", pairAddress);
   const permit = await getPermit(pairAddress, provider);
-  instance.storePermit(permit);
-  const permission = instance.extractPermitPermission(permit);
+  instance.storePermit(permit!);
+  const permission = instance.extractPermitPermission(permit!);
 
   const pair = await hre.ethers.getContractAt("SwapPair", pairAddress);
 
