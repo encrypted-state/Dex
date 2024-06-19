@@ -43,7 +43,6 @@ export default function Token({ token }: any) {
     const permit = await generatePermits(token.address, provider!);
     fhenix.storePermit(permit!);
     const permission = await fhenix!.extractPermitPermission(permit!);
-    console.log(token.address);
     const contract = {
       contract: new ethers.Contract(token.address, fherc20ABI, signer as any),
       address: token.address,
@@ -58,14 +57,10 @@ export default function Token({ token }: any) {
   }
 
   async function handleMint() {
-    console.log(token.address);
-    console.log(signer);
-
     const contract = {
       contract: new ethers.Contract(token.address, fherc20ABI, signer as any),
       address: token.address,
     };
-    console.log(contract);
     const provider = await primaryWallet?.connector.ethers?.getWeb3Provider();
     const fhenix = new FhenixClient({ provider });
 

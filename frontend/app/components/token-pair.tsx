@@ -206,7 +206,6 @@ const MainButton = ({
 }) => {
   const signer: any = useEthersSigner();
   const { primaryWallet, isAuthenticated } = useDynamicContext();
-  console.log(isAuthenticated);
 
   async function handleSwap() {
     const provider = await primaryWallet?.connector.ethers?.getWeb3Provider();

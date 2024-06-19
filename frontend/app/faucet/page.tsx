@@ -11,7 +11,6 @@ import dynamic from "next/dynamic";
 
 export default function FaucetPage() {
   const Token = dynamic(() => import("../components/token"), { ssr: false });
-  console.log("render faucet");
 
   return (
     <>
